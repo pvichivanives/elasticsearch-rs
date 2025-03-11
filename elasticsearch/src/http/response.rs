@@ -22,6 +22,7 @@ use crate::{
     http::{headers::HeaderMap, Method, StatusCode, Url},
 };
 use bytes::Bytes;
+use futures::{Stream, TryStreamExt};
 use serde::{
     de,
     de::{DeserializeOwned, MapAccess, Visitor},
@@ -132,6 +133,13 @@ impl Response {
     pub async fn bytes(self) -> Result<Bytes, ClientError> {
         let bytes: Bytes = self.response.bytes().await?;
         Ok(bytes)
+    }
+
+    /// Creates a bytes_stream from the response body.
+    ///
+    /// Reading the response body consumes `self`
+    pub async fn bytes_stream(self) -> impl Stream<Item = Result<Bytes, ClientError>> {
+        self.response.bytes_stream().map_err(ClientError::from)
     }
 
     /// Gets the request URL

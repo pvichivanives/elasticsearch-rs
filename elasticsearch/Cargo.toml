@@ -34,7 +34,9 @@ percent-encoding = "2"
 reqwest = { version = "0.12", default-features = false, features = [
     "gzip",
     "json",
+    "stream",
 ] }
+futures = "0.3"
 url = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -54,7 +56,6 @@ features = ["macros", "net", "time", "rt-multi-thread"]
 chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4", features = ["env"] }
 failure = "0.1"
-futures = "0.3"
 http = "1"
 axum = "0.7"
 #hyper = { version = "1", features = ["server", "http1"] }
